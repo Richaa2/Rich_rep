@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:weather_example/api/weather_api.dart';
 import 'package:weather_example/models/weather_forecast_daily.dart';
 
@@ -27,6 +28,41 @@ class _WeatherForecastScreenState extends State<WeatherForecastScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.black87,
+        title: Text('openweathermap.org'),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.my_location),
+          onPressed: () {},
+        ),
+        actions: <Widget>[
+          IconButton(onPressed: () {}, icon: Icon(Icons.location_city))
+        ],
+      ),
+      body: ListView(
+        children: [
+          Container(
+            child: FutureBuilder<WeatherForecast>(
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Text('All Good',
+                      style: Theme.of(context).textTheme.headline2);
+                } else {
+                  return Center(
+                      child: SpinKitDoubleBounce(
+                    color: Colors.black,
+                    size: 100,
+                    duration: Duration(seconds: 5),
+                  ));
+                }
+              },
+              future: forecastObject,
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
