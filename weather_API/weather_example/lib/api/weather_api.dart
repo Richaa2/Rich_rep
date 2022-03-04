@@ -11,9 +11,9 @@ class WeatherApi {
     Map<String, String> parameters;
 
     var params = {
+      'q': 'London',
       'appid': Constants.WEATHER_APP_ID,
       'units': 'metric',
-      'q': 'London'
     };
     parameters = params;
 
