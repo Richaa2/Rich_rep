@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:weather_example/api/weather_api.dart';
 import 'package:weather_example/models/weather_forecast_daily.dart';
+import 'package:weather_example/widgets/bottom_list_view.dart';
 import 'package:weather_example/widgets/city_view.dart';
 import 'package:weather_example/widgets/detail_view.dart';
 import 'package:weather_example/widgets/temp_view.dart';
@@ -58,7 +59,9 @@ class _WeatherForecastScreenState extends State<WeatherForecastScreen> {
                       SizedBox(height: 50),
                       TempView(snapshot: snapshot),
                       SizedBox(height: 50),
-                      DetailView(snapshot: snapshot)
+                      DetailView(snapshot: snapshot),
+                      SizedBox(height: 50),
+                      BottomListView(snapshot: snapshot),
                     ],
                   );
                 } else {
