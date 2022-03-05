@@ -1,3 +1,5 @@
+import 'package:weather_example/utilities/constants.dart';
+
 class WeatherForecast {
   City? city;
   String? cod;
@@ -109,6 +111,8 @@ class WeatherList {
   num? pop;
   double? rain;
 
+  var get;
+
   WeatherList(
       {this.dt,
       this.sunrise,
@@ -173,6 +177,10 @@ class WeatherList {
     data['rain'] = this.rain;
     return data;
   }
+
+  String getIconUrl() {
+    return Constants.WEATHER_IMAGES_URL + weather![0].icon.toString() + '.png';
+  }
 }
 
 class Temp {
@@ -210,7 +218,7 @@ class FeelsLike {
   num? day;
   num? night;
   double? eve;
-  double? morn;
+  num? morn;
 
   FeelsLike({this.day, this.night, this.eve, this.morn});
 
