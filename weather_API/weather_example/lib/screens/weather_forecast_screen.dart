@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:weather_example/api/weather_api.dart';
 import 'package:weather_example/models/weather_forecast_daily.dart';
+import 'package:weather_example/screens/city_screen.dart';
 import 'package:weather_example/widgets/bottom_list_view.dart';
 import 'package:weather_example/widgets/city_view.dart';
 import 'package:weather_example/widgets/detail_view.dart';
@@ -16,8 +17,8 @@ class WeatherForecastScreen extends StatefulWidget {
 
 class _WeatherForecastScreenState extends State<WeatherForecastScreen> {
   late Future<WeatherForecast> forecastObject;
-  final String _cityName = 'London';
-
+  String _cityName = 'London';
+  // String _cityName;
   @override
   void initState() {
     super.initState();
@@ -39,10 +40,33 @@ class _WeatherForecastScreenState extends State<WeatherForecastScreen> {
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.my_location),
-          onPressed: () {},
+          onPressed: () {
+            setState(() {
+              forecastObject =
+                  WeatherApi().fetchWeatherForecastWithCity(cityName: '');
+            });
+          },
         ),
         actions: <Widget>[
-          IconButton(onPressed: () {}, icon: Icon(Icons.location_city))
+          IconButton(
+              onPressed: () async {
+                var tappedName = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return CityScreen();
+                    },
+                  ),
+                );
+                if (tappedName != null) {
+                  setState(() {
+                    _cityName = tappedName;
+                    forecastObject = WeatherApi()
+                        .fetchWeatherForecastWithCity(cityName: _cityName);
+                  });
+                }
+              },
+              icon: Icon(Icons.location_city))
         ],
       ),
       body: ListView(
