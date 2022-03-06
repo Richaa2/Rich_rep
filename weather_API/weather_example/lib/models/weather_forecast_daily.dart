@@ -106,7 +106,7 @@ class WeatherList {
   List<Weather>? weather;
   double? speed;
   int? deg;
-  double? gust;
+  num? gust;
   int? clouds;
   num? pop;
   double? rain;
@@ -147,7 +147,7 @@ class WeatherList {
     }
     speed = json['speed'] as double;
     deg = json['deg'];
-    gust = json['gust'] as double;
+    gust = json['gust'];
     clouds = json['clouds'];
     pop = json['pop'];
     rain = json['rain'];
