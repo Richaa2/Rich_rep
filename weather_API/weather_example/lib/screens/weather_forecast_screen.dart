@@ -3,13 +3,15 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:weather_example/api/weather_api.dart';
 import 'package:weather_example/models/weather_forecast_daily.dart';
 import 'package:weather_example/screens/city_screen.dart';
+import 'package:weather_example/utilities/location.dart';
 import 'package:weather_example/widgets/bottom_list_view.dart';
 import 'package:weather_example/widgets/city_view.dart';
 import 'package:weather_example/widgets/detail_view.dart';
 import 'package:weather_example/widgets/temp_view.dart';
 
 class WeatherForecastScreen extends StatefulWidget {
-  const WeatherForecastScreen({Key? key}) : super(key: key);
+  final locationWeather;
+  WeatherForecastScreen({this.locationWeather});
 
   @override
   State<WeatherForecastScreen> createState() => _WeatherForecastScreenState();
@@ -17,14 +19,15 @@ class WeatherForecastScreen extends StatefulWidget {
 
 class _WeatherForecastScreenState extends State<WeatherForecastScreen> {
   late Future<WeatherForecast> forecastObject;
-  String _cityName = 'London';
+  late String _cityName;
   // String _cityName;
   @override
   void initState() {
     super.initState();
 
-    forecastObject =
-        WeatherApi().fetchWeatherForecastWithCity(cityName: _cityName);
+    if (widget.locationWeather != null) {
+      forecastObject = Future.value(widget.locationWeather);
+    }
 
     forecastObject.then((weather) {
       print(weather.list![0].weather![0].main);
@@ -38,12 +41,12 @@ class _WeatherForecastScreenState extends State<WeatherForecastScreen> {
         backgroundColor: Colors.black87,
         title: Text('openweathermap.org'),
         centerTitle: true,
+        automaticallyImplyLeading: false,
         leading: IconButton(
           icon: Icon(Icons.my_location),
           onPressed: () {
             setState(() {
-              forecastObject =
-                  WeatherApi().fetchWeatherForecastWithCity(cityName: '');
+              forecastObject = WeatherApi().fetchWeatherForecast(cityName: '');
             });
           },
         ),
@@ -61,8 +64,8 @@ class _WeatherForecastScreenState extends State<WeatherForecastScreen> {
                 if (tappedName != null) {
                   setState(() {
                     _cityName = tappedName;
-                    forecastObject = WeatherApi()
-                        .fetchWeatherForecastWithCity(cityName: _cityName);
+                    forecastObject = WeatherApi().fetchWeatherForecast(
+                        cityName: _cityName, isCity: true);
                   });
                 }
               },
@@ -90,9 +93,12 @@ class _WeatherForecastScreenState extends State<WeatherForecastScreen> {
                   );
                 } else {
                   return Center(
-                      child: SpinKitDoubleBounce(
-                    color: Colors.black,
-                    size: 100,
+                      child: Text(
+                    'City not found\n Please, enter correct city',
+                    style: TextStyle(
+                      fontSize: 25,
+                    ),
+                    textAlign: TextAlign.center,
                   ));
                 }
               },
