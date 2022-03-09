@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // ignore: close_sinks
+    
     ColorBloc _bloc = BlocProvider.of<ColorBloc>(context);
     return Scaffold(
       appBar: AppBar(
