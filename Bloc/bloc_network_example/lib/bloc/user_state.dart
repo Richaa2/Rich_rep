@@ -9,4 +9,6 @@ class UserLoadedState extends UserState {
   UserLoadedState({required this.loadedUser}) : assert(loadedUser != null);
 }
 
-class UserErrorState extends UserState {}
+class UserErrorState extends UserState {
+  UserErrorState(Object object);
+}
