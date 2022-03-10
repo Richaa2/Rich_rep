@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bloc_second/color_event.dart';
 
-enum ColorEvent { event_red, event_green }
+class ColorBloc extends Bloc<ColorEvent, Color> {
+
+  ColorBloc(_color) : super(Colors.red) {
+    on<ColorEvent>((event, emit) => emit(Colors.red));
+    on<ColorGreenEvent>((event, emit) => emit(Colors.green));
+  }
+}
 
 // class ColorBloc extends Bloc<ColorEvent, Color> {
 //   static const Color _color = Colors.red;

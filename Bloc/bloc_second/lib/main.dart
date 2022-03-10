@@ -1,4 +1,6 @@
 import 'package:bloc_second/color_bloc.dart';
+import 'package:bloc_second/color_event.dart';
+import 'package:bloc_second/color_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       home: BlocProvider(
-        create: (context) => ColorBloc(),
+        create: (context) => ColorBloc(ColorRedState()),
         child: MyHomePage(),
       ),
     );
@@ -23,7 +25,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    
     ColorBloc _bloc = BlocProvider.of<ColorBloc>(context);
     return Scaffold(
       appBar: AppBar(
@@ -46,14 +47,14 @@ class MyHomePage extends StatelessWidget {
           FloatingActionButton(
             backgroundColor: Colors.red,
             onPressed: () {
-              _bloc.add(ColorEvent.event_red);
+              _bloc.add(ColorRedEvent());
             },
           ),
           SizedBox(width: 10),
           FloatingActionButton(
             backgroundColor: Colors.green,
             onPressed: () {
-              _bloc.add(ColorEvent.event_green);
+              _bloc.add(ColorGreenEvent());
             },
           ),
         ],
