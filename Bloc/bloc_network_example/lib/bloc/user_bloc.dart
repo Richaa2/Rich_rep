@@ -18,6 +18,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       }
     });
 
-    on<UserClearEvent>((event, emit) => emit(UserEmptyState()));
+    on<UserClearEvent>((event, emit) async => emit(UserEmptyState()));
   }
 }
