@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rick_and_morty/common/app_colors.dart';
 import 'package:rick_and_morty/feature/domain/entities/person_entity.dart';
+import 'package:rick_and_morty/feature/presentation/widgets/person_cache_image_widget.dart';
 
 class PersonCard extends StatelessWidget {
   final PersonEntity person;
@@ -15,9 +16,11 @@ class PersonCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(8)),
         child: Row(children: [
           Container(
-            height: 166,
-            width: 166,
-            child: Image.network(person.image),
+            child: PersonCacheImage(
+              width: 166,
+              height: 166,
+              imageUrl: person.image,
+            ),
           ),
           const SizedBox(
             width: 16,
@@ -54,17 +57,56 @@ class PersonCard extends StatelessWidget {
                       width: 8,
                     ),
                     Expanded(
-                        child: Text(
-                      '${person.status} - ${person.species}',
-                      style: TextStyle(color: Colors.white),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ))
+                      child: Text(
+                        '${person.status} - ${person.species}',
+                        style: TextStyle(color: Colors.white),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    )
                   ],
-                )
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                Text(
+                  'Last known location:',
+                  style: TextStyle(color: AppColors.greyColor),
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                Text(
+                  person.location.name,
+                  style: TextStyle(color: Colors.white),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                Text(
+                  'origin',
+                  style: TextStyle(color: AppColors.greyColor),
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                Text(
+                  person.origin.name,
+                  style: TextStyle(color: Colors.white),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
               ],
             ),
-          )
+          ),
+          const SizedBox(
+            width: 12,
+          ),
         ]));
   }
 }

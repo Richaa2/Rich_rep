@@ -44,11 +44,10 @@ class PersonRepositoryImpl implements PersonRepository {
     } else {
       try {
         final localPerson = await localDataSource.getLastPersonsFromCache();
-        Right(localPerson);
+        return Right(localPerson);
       } on CacheException {
         return Left(CacheFailure());
       }
-      throw {};
     }
   }
 }
