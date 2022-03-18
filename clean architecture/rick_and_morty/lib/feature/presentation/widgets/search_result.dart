@@ -36,14 +36,16 @@ class SearchResult extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 personResult.name,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 personResult.location.name,
-                style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+                style:
+                    const TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
               ),
             )
           ],

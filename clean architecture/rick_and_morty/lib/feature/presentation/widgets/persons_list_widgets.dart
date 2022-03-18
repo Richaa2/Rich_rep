@@ -10,6 +10,11 @@ import 'person_card_widgets.dart';
 
 class PersonsList extends StatelessWidget {
   final scrollController = ScrollController();
+  final int page = -1;
+
+  PersonsList({
+    Key? key,
+  }) : super(key: key);
 
   void setupScrollController(BuildContext context) {
     scrollController.addListener(() {
@@ -38,13 +43,13 @@ class PersonsList extends StatelessWidget {
       } else if (state is PersonError) {
         return Text(
           state.message,
-          style: TextStyle(color: Colors.white, fontSize: 25),
+          style: const TextStyle(color: Colors.white, fontSize: 25),
         );
       }
       return ListView.separated(
         controller: scrollController,
         separatorBuilder: (BuildContext context, int index) {
-          return Divider(
+          return const Divider(
             color: Colors.grey,
           );
         },
@@ -65,9 +70,9 @@ class PersonsList extends StatelessWidget {
   }
 
   Widget _loadingindicator() {
-    return Padding(
-      padding: const EdgeInsets.all(8),
-      child: Center(child: CircularProgressIndicator()),
+    return const Padding(
+      padding: EdgeInsets.all(8),
+      child: const Center(child: CircularProgressIndicator()),
     );
   }
 }

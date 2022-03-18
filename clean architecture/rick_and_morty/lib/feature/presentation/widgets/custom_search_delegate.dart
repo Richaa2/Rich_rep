@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rick_and_morty/feature/domain/entities/person_entity.dart';
-import 'package:rick_and_morty/feature/domain/usecases/search_person.dart';
 import 'package:rick_and_morty/feature/presentation/bloc/search_bloc/search_bloc.dart';
 import 'package:rick_and_morty/feature/presentation/bloc/search_bloc/search_event.dart';
 import 'package:rick_and_morty/feature/presentation/bloc/search_bloc/search_state.dart';
@@ -16,7 +15,7 @@ class CustomSearchDelegate extends SearchDelegate {
   List<Widget>? buildActions(BuildContext context) {
     return [
       IconButton(
-        icon: Icon(Icons.clear),
+        icon: const Icon(Icons.clear),
         onPressed: () {
           query = '';
           showSuggestions(context);
@@ -28,7 +27,7 @@ class CustomSearchDelegate extends SearchDelegate {
   @override
   Widget? buildLeading(BuildContext context) {
     return IconButton(
-        icon: Icon(Icons.arrow_back_outlined),
+        icon: const Icon(Icons.arrow_back_outlined),
         tooltip: 'Back',
         onPressed: () => close(context, null));
   }
@@ -41,7 +40,7 @@ class CustomSearchDelegate extends SearchDelegate {
     return BlocBuilder<PersonSearchBloc, PersonSearchState>(
         builder: (context, state) {
       if (state is PersonSearchLoading) {
-        return Center(
+        return const Center(
           child: CircularProgressIndicator(),
         );
       } else if (state is PersonSearchLoaded) {
@@ -60,7 +59,7 @@ class CustomSearchDelegate extends SearchDelegate {
       } else if (state is PersonSearchError) {
         return _showErrorText(state.message);
       } else {
-        return Center(
+        return const Center(
           child: Icon(Icons.now_wallpaper),
         );
       }
@@ -73,7 +72,7 @@ class CustomSearchDelegate extends SearchDelegate {
       child: Center(
         child: Text(
           errorMessage,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
@@ -88,15 +87,15 @@ class CustomSearchDelegate extends SearchDelegate {
       return Container();
     }
     return ListView.separated(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         itemBuilder: (context, index) {
           return Text(
             _suggestions[index],
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
           );
         },
         separatorBuilder: (context, index) {
-          return Divider();
+          return const Divider();
         },
         itemCount: _suggestions.length);
   }

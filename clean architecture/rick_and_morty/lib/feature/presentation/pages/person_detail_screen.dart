@@ -12,30 +12,30 @@ class PersonDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Character'),
+        title: const Text('Character'),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 24,
             ),
             Text(
               person.name,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 28,
                   color: Colors.white,
                   fontWeight: FontWeight.w700),
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
             Container(
               child: PersonCacheImage(
                   imageUrl: person.image, width: 260, height: 260),
             ),
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
             Row(
@@ -49,12 +49,12 @@ class PersonDetailPage extends StatelessWidget {
                           person.status == 'Alive' ? Colors.green : Colors.red,
                       borderRadius: BorderRadius.circular(8)),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 8,
                 ),
                 Text(
                   person.status,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 16,
                   ),
@@ -62,7 +62,7 @@ class PersonDetailPage extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
             if (person.type.isNotEmpty) ...buildText('Type:', person.type),
@@ -83,16 +83,16 @@ class PersonDetailPage extends StatelessWidget {
     return [
       Text(
         text,
-        style: TextStyle(color: AppColors.greyColor),
+        style: const TextStyle(color: AppColors.greyColor),
       ),
-      SizedBox(
+      const SizedBox(
         height: 4,
       ),
       Text(
         value,
-        style: TextStyle(color: Colors.white),
+        style: const TextStyle(color: Colors.white),
       ),
-      SizedBox(
+      const SizedBox(
         height: 12,
       ),
     ];

@@ -17,7 +17,7 @@ class Personloading extends PersonState {
   final List<PersonEntity> oldPersonsList;
   final bool isFirstFetch;
 
-  Personloading(this.oldPersonsList, {this.isFirstFetch = false});
+  const Personloading(this.oldPersonsList, {this.isFirstFetch = false});
 
   @override
   List<Object?> get props => [oldPersonsList];
@@ -26,7 +26,7 @@ class Personloading extends PersonState {
 class PersonLoaded extends PersonState {
   final List<PersonEntity> personsList;
 
-  PersonLoaded(this.personsList);
+  const PersonLoaded(this.personsList);
   @override
   List<Object?> get props => [personsList];
 }
@@ -34,7 +34,7 @@ class PersonLoaded extends PersonState {
 class PersonError extends PersonState {
   final String message;
 
-  PersonError({required this.message});
+  const PersonError({required this.message});
   @override
   List<Object?> get props => [message];
 }

@@ -19,7 +19,7 @@ class PersonLocalDataSourceImpl implements PersonLocalDataSource {
   Future<List<PersonModel>> getLastPersonsFromCache() {
     final jsonPersonsList =
         sharedPreferences.getStringList(CACHED_PERSONS_LIST);
-    if (jsonPersonsList!.isNotEmpty) {
+    if (jsonPersonsList != null) {
       return Future.value(jsonPersonsList
           .map((person) => PersonModel.fromJson(json.decode(person)))
           .toList());
