@@ -9,7 +9,15 @@ abstract class PersonSearchState extends Equatable {
 
 class PersonEmpry extends PersonSearchState {}
 
-class PersonSearchLoading extends PersonSearchState {}
+class PersonSearchLoading extends PersonSearchState {
+  final List<PersonEntity>? oldPersonsList;
+  final bool? isFirstFetch;
+
+  PersonSearchLoading(this.oldPersonsList, {this.isFirstFetch = false});
+
+  @override
+  List<Object?> get props => [oldPersonsList];
+}
 
 class PersonSearchLoaded extends PersonSearchState {
   final List<PersonEntity> persons;

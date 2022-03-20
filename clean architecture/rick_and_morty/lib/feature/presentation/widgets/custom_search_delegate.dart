@@ -1,10 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rick_and_morty/feature/domain/entities/person_entity.dart';
 import 'package:rick_and_morty/feature/presentation/bloc/search_bloc/search_bloc.dart';
 import 'package:rick_and_morty/feature/presentation/bloc/search_bloc/search_event.dart';
 import 'package:rick_and_morty/feature/presentation/bloc/search_bloc/search_state.dart';
-import 'package:rick_and_morty/feature/presentation/widgets/search_result.dart';
+import 'package:rick_and_morty/feature/presentation/widgets/person_card_widgets.dart';
 
 class CustomSearchDelegate extends SearchDelegate {
   CustomSearchDelegate() : super(searchFieldLabel: 'Search for character...');
@@ -34,28 +36,67 @@ class CustomSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
+    final scrollSearchController = ScrollController();
+    int page = -1;
+    void setupScrollSearchController(BuildContext context) {
+      scrollSearchController.addListener(() {
+        if (scrollSearchController.position.atEdge) {
+          if (scrollSearchController.position.pixels != 0) {
+            // BlocProvider.of<PersonListCubit>(context).loadPerson();
+            context.read<PersonSearchBloc>();
+          }
+        }
+      });
+    }
+
     print('Inside custom search delegate and search query is $query');
     BlocProvider.of<PersonSearchBloc>(context, listen: false)
         .add(SearchPersons(query));
+    setupScrollSearchController;
     return BlocBuilder<PersonSearchBloc, PersonSearchState>(
         builder: (context, state) {
-      if (state is PersonSearchLoading) {
-        return const Center(
-          child: CircularProgressIndicator(),
+      Widget _loadingindicator() {
+        return Padding(
+          padding: EdgeInsets.all(8),
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
         );
+      }
+
+      List<PersonEntity>? persons = [];
+      bool isLoading = false;
+      if (state is PersonSearchLoading && state.isFirstFetch!) {
+        return _loadingindicator();
+      } else if (state is PersonSearchLoading) {
+        isLoading = true;
+        persons = state.oldPersonsList;
       } else if (state is PersonSearchLoaded) {
         final person = state.persons;
         if (person.isEmpty) {
           return _showErrorText('No Characters with that name found');
         }
         return Container(
-          child: ListView.builder(
-              itemBuilder: (context, int index) {
-                PersonEntity result = person[index];
-                return SearchResult(personResult: result);
-              },
-              itemCount: person.isNotEmpty ? person.length : 0),
-        );
+            child: ListView.separated(
+          controller: scrollSearchController,
+          separatorBuilder: (BuildContext context, int index) {
+            return const Divider(
+              color: Colors.grey,
+            );
+          },
+          itemCount: persons.length,
+          itemBuilder: (context, index) {
+            if (index < persons!.length) {
+              return PersonCard(person: persons[index]);
+            } else {
+              Timer(const Duration(milliseconds: 30), () {
+                scrollSearchController
+                    .jumpTo(scrollSearchController.position.maxScrollExtent);
+              });
+              return _loadingindicator();
+            }
+          },
+        ));
       } else if (state is PersonSearchError) {
         return _showErrorText(state.message);
       } else {
@@ -63,6 +104,7 @@ class CustomSearchDelegate extends SearchDelegate {
           child: Icon(Icons.now_wallpaper),
         );
       }
+      throw (CircularProgressIndicator);
     });
   }
 
