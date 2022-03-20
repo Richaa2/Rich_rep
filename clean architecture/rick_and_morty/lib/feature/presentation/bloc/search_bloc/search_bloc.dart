@@ -15,7 +15,7 @@ class PersonSearchBloc extends Bloc<PersonSearchEvent, PersonSearchState> {
   final SearchPerson searchPerson;
   int page = 1;
 
-  PersonSearchBloc({required this.searchPerson}) : super(PersonEmpry()) {
+  PersonSearchBloc({required this.searchPerson}) : super(PersonSearchEmpty()) {
     on<SearchPersons>(_onEvent);
   }
   FutureOr<void> _onEvent(event, emit) async {
@@ -28,7 +28,7 @@ class PersonSearchBloc extends Bloc<PersonSearchEvent, PersonSearchState> {
     if (currentState is PersonSearchLoaded) {
       oldPerson = currentState.persons;
     }
-    emit(PersonSearchLoading(oldPerson, isFirstFetch: page == 1));
+    emit(PersonSearchLoading());
 
     final failureOrPerson =
         await searchPerson(SearchPersonParams(query: event.personQuery));
