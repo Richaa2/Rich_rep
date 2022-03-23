@@ -16,6 +16,7 @@ class WebViewPage extends StatefulWidget {
 }
 
 class _WebViewPageState extends State<WebViewPage> {
+  late bool isSubmitting;
   late WebViewController _webController;
   double progress = 0;
   @override
@@ -103,12 +104,25 @@ class _WebViewPageState extends State<WebViewPage> {
                   setState(() {});
                 },
                 javascriptMode: JavascriptMode.unrestricted,
-                initialUrl: 'https://flutter.dev',
+                initialUrl: 'https://facebook.com',
                 onPageStarted: (url) {
                   log('new site: $url');
+                  if (url.contains('https://flutter.dev')) {
+                    Future.delayed(const Duration(microseconds: 300), () {
+                      _webController.evaluateJavascript(
+                        "document.getElementsByTagName('footer')[0].style.display='none'",
+                      );
+                    });
+                  }
                 },
                 onPageFinished: (url) {
                   log('Page are downloaded');
+                  if (url.contains('https://m.facebook.com')) {
+                    if (isSubmitting) {
+                      _webController.loadUrl('https://m.facebook.com');
+                      isSubmitting = false;
+                    }
+                  }
                 },
                 navigationDelegate: (request) {
                   if (request.url.startsWith('https://m.youtube.com')) {
@@ -124,12 +138,27 @@ class _WebViewPageState extends State<WebViewPage> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            final currentUrl = await _webController.currentUrl();
-            log('previous site: $currentUrl');
-            //_webController.loadUrl('https://www.youtube.com');
+            const email = 'kazanowa007@gmail.com';
+            const pass = 'shamanar2371851';
+
             _webController.evaluateJavascript(
-              "document.getElementsByTagName('footer')[0].style.display='none'",
+              "document.getElementById('m_login_email').value='$email'",
             );
+            _webController.evaluateJavascript(
+              "document.getElementById('m_login_password').value='$pass'",
+            );
+
+            await Future.delayed(const Duration(seconds: 1));
+            isSubmitting = true;
+            await _webController.evaluateJavascript(
+              "document.forms[0].submit()",
+            );
+            // final currentUrl = await _webController.currentUrl();
+            // log('previous site: $currentUrl');
+            //_webController.loadUrl('https://www.youtube.com');
+            // _webController.evaluateJavascript(
+            //   "document.getElementsByTagName('footer')[0].style.display='none'",
+            // );
           },
           child: const Icon(
             Icons.next_plan,
