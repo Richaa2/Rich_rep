@@ -104,13 +104,32 @@ class _WebViewPageState extends State<WebViewPage> {
                 },
                 javascriptMode: JavascriptMode.unrestricted,
                 initialUrl: 'https://flutter.dev',
+                onPageStarted: (url) {
+                  log('new site: $url');
+                },
+                onPageFinished: (url) {
+                  log('Page are downloaded');
+                },
+                navigationDelegate: (request) {
+                  if (request.url.startsWith('https://m.youtube.com')) {
+                    log('navigation is blocked to $request');
+                    return NavigationDecision.prevent;
+                  }
+                  log('navigation allow to $request');
+                  return NavigationDecision.navigate;
+                },
               ),
             ),
           ],
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            _webController.loadUrl('https://www.youtube.com');
+            final currentUrl = await _webController.currentUrl();
+            log('previous site: $currentUrl');
+            //_webController.loadUrl('https://www.youtube.com');
+            _webController.evaluateJavascript(
+              "document.getElementsByTagName('footer')[0].style.display='none'",
+            );
           },
           child: const Icon(
             Icons.next_plan,
