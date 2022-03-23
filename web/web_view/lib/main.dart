@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:web_view/page/webview_local_page.dart';
 import 'package:web_view/page/webview_page.dart';
 
 void main() {
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData.dark(),
-      home: const WebViewPage(),
+      home: const WebViewLocalPage(),
     );
   }
 }
