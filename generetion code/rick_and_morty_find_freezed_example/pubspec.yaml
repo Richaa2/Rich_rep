@@ -36,9 +36,18 @@ dependencies:
   cupertino_icons: ^1.0.2
   freezed_annotation: ^1.1.0
   json_annotation: ^4.4.0
+
+  
   http: ^0.13.4
+
+
   flutter_bloc: ^8.0.1
+  hydrated_bloc: ^8.1.0
+  path_provider: ^2.0.9
+
   cached_network_image: ^3.2.0
+  pull_to_refresh: ^2.0.0
+  
 
 dev_dependencies:
   flutter_test:

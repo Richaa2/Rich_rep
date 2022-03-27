@@ -252,6 +252,21 @@ abstract class CharacterEventFetch implements CharacterEvent {
       throw _privateConstructorUsedError;
 }
 
+CharacterState _$CharacterStateFromJson(Map<String, dynamic> json) {
+  switch (json['runtimeType']) {
+    case 'looading':
+      return CharacterStateLoading.fromJson(json);
+    case 'loaded':
+      return CharacterStateLoaded.fromJson(json);
+    case 'error':
+      return CharacterStateError.fromJson(json);
+
+    default:
+      throw CheckedFromJsonException(json, 'runtimeType', 'CharacterState',
+          'Invalid union type "${json['runtimeType']}"!');
+  }
+}
+
 /// @nodoc
 class _$CharacterStateTearOff {
   const _$CharacterStateTearOff();
@@ -268,6 +283,10 @@ class _$CharacterStateTearOff {
 
   CharacterStateError error() {
     return const CharacterStateError();
+  }
+
+  CharacterState fromJson(Map<String, Object?> json) {
+    return CharacterState.fromJson(json);
   }
 }
 
@@ -320,6 +339,7 @@ mixin _$CharacterState {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -359,9 +379,15 @@ class _$CharacterStateLoadingCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$CharacterStateLoading implements CharacterStateLoading {
-  const _$CharacterStateLoading();
+  const _$CharacterStateLoading({String? $type}) : $type = $type ?? 'looading';
+
+  factory _$CharacterStateLoading.fromJson(Map<String, dynamic> json) =>
+      _$$CharacterStateLoadingFromJson(json);
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
 
   @override
   String toString() {
@@ -444,10 +470,18 @@ class _$CharacterStateLoading implements CharacterStateLoading {
     }
     return orElse();
   }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CharacterStateLoadingToJson(this);
+  }
 }
 
 abstract class CharacterStateLoading implements CharacterState {
   const factory CharacterStateLoading() = _$CharacterStateLoading;
+
+  factory CharacterStateLoading.fromJson(Map<String, dynamic> json) =
+      _$CharacterStateLoading.fromJson;
 }
 
 /// @nodoc
@@ -456,6 +490,8 @@ abstract class $CharacterStateLoadedCopyWith<$Res> {
           $Res Function(CharacterStateLoaded) then) =
       _$CharacterStateLoadedCopyWithImpl<$Res>;
   $Res call({Character characterLoaded});
+
+  $CharacterCopyWith<$Res> get characterLoaded;
 }
 
 /// @nodoc
@@ -480,15 +516,29 @@ class _$CharacterStateLoadedCopyWithImpl<$Res>
               as Character,
     ));
   }
+
+  @override
+  $CharacterCopyWith<$Res> get characterLoaded {
+    return $CharacterCopyWith<$Res>(_value.characterLoaded, (value) {
+      return _then(_value.copyWith(characterLoaded: value));
+    });
+  }
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$CharacterStateLoaded implements CharacterStateLoaded {
-  const _$CharacterStateLoaded({required this.characterLoaded});
+  const _$CharacterStateLoaded({required this.characterLoaded, String? $type})
+      : $type = $type ?? 'loaded';
+
+  factory _$CharacterStateLoaded.fromJson(Map<String, dynamic> json) =>
+      _$$CharacterStateLoadedFromJson(json);
 
   @override
   final Character characterLoaded;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
 
   @override
   String toString() {
@@ -581,11 +631,19 @@ class _$CharacterStateLoaded implements CharacterStateLoaded {
     }
     return orElse();
   }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CharacterStateLoadedToJson(this);
+  }
 }
 
 abstract class CharacterStateLoaded implements CharacterState {
   const factory CharacterStateLoaded({required Character characterLoaded}) =
       _$CharacterStateLoaded;
+
+  factory CharacterStateLoaded.fromJson(Map<String, dynamic> json) =
+      _$CharacterStateLoaded.fromJson;
 
   Character get characterLoaded;
   @JsonKey(ignore: true)
@@ -613,9 +671,15 @@ class _$CharacterStateErrorCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$CharacterStateError implements CharacterStateError {
-  const _$CharacterStateError();
+  const _$CharacterStateError({String? $type}) : $type = $type ?? 'error';
+
+  factory _$CharacterStateError.fromJson(Map<String, dynamic> json) =>
+      _$$CharacterStateErrorFromJson(json);
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
 
   @override
   String toString() {
@@ -698,8 +762,16 @@ class _$CharacterStateError implements CharacterStateError {
     }
     return orElse();
   }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CharacterStateErrorToJson(this);
+  }
 }
 
 abstract class CharacterStateError implements CharacterState {
   const factory CharacterStateError() = _$CharacterStateError;
+
+  factory CharacterStateError.fromJson(Map<String, dynamic> json) =
+      _$CharacterStateError.fromJson;
 }
