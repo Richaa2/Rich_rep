@@ -32,10 +32,7 @@ class _SearchPageState extends State<SearchPage> {
     if (_storage.runtimeType.toString().isEmpty) {
       if (_currentResults.isEmpty) {
         context.read<CharacterBloc>().add(
-              const CharacterEvent.fetch(
-                name: '',
-                page: 1,
-              ),
+              const CharacterEvent.fetch(name: '', page: 1),
             );
       }
     }
@@ -70,6 +67,7 @@ class _SearchPageState extends State<SearchPage> {
               _currentPage = 1;
               _currentResults = [];
               _currentSearchStr = value;
+
               searchDebounce?.cancel();
               searchDebounce = Timer(const Duration(milliseconds: 500), () {
                 context
