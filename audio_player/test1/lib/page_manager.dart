@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:test1/notifier/progress_notifier.dart';
@@ -97,6 +99,7 @@ class PageManager {
   void _setInitialPlaylist() async {
     const prefix = 'https://www.soundhelix.com/examples/mp3';
     final song1 = Uri.parse('$prefix/SoundHelix-Song-1.mp3');
+
     final song2 = Uri.parse('$prefix/SoundHelix-Song-2.mp3');
     final song3 = Uri.parse('$prefix/SoundHelix-Song-3.mp3');
     _playlist = ConcatenatingAudioSource(children: [
@@ -104,6 +107,9 @@ class PageManager {
       AudioSource.uri(song2, tag: 'Samba'),
       AudioSource.uri(song3, tag: 'Rumba'),
     ]);
+    // await _audioPlayer.setClip(
+    //     start: Duration(seconds: 10), end: Duration(seconds: 20));
+    // await _audioPlayer.play();
     await _audioPlayer.setAudioSource(_playlist);
   }
 
@@ -131,6 +137,9 @@ class PageManager {
   }
 
   void play() {
+    // await _audioPlayer.setClip(
+    //     start: Duration(seconds: 10), end: Duration(seconds: 20));
+
     _audioPlayer.play();
   }
 
